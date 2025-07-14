@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricParticles : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particlePrefab;
-    [SerializeField] private List<Transform> spawnPoints = new();
+    [SerializeField] private List<SwpanPoint> spawnPoints = new();
 
     private List<ParticleSystem> particleInstances = new();
     private ParticleController particleController;
@@ -23,11 +24,13 @@ public class ElectricParticles : MonoBehaviour
     private void Awake()
     {
         particleController = GetComponent<ParticleController>();
-        
-        foreach (var parent in spawnPoints)
+
+        foreach (var swpawnPoint in spawnPoints)
         {
-            ParticleSystem particleInstance = Instantiate(particlePrefab, parent);
+            ParticleSystem particleInstance = Instantiate(particlePrefab, swpawnPoint.Point);
             particleInstance.Stop();
+            var shape = particleInstance.shape;
+            shape.radius = swpawnPoint.Radius;
             particleInstances.Add(particleInstance);
         }
     }
@@ -40,5 +43,11 @@ public class ElectricParticles : MonoBehaviour
     private void OnDisable()
     {
         particleController.OnStartParticles -= PlayParticles;
+    }
+
+    [Serializable] private class SwpanPoint
+    {
+        [field: SerializeField] public Transform Point { get; private set; }
+        [field: SerializeField] public float Radius { get; private set; }
     }
 }

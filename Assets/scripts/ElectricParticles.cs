@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElectricParticles : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particlePrefab;
-    [SerializeField] private List<SwpanPoint> spawnPoints = new();
+    [SerializeField] private List<ParticleData> particlesData = new();
 
     private List<ParticleSystem> particleInstances = new();
     private ParticleController particleController;
@@ -25,9 +25,9 @@ public class ElectricParticles : MonoBehaviour
     {
         particleController = GetComponent<ParticleController>();
 
-        foreach (var swpawnPoint in spawnPoints)
+        foreach (var swpawnPoint in particlesData)
         {
-            ParticleSystem particleInstance = Instantiate(particlePrefab, swpawnPoint.Point);
+            ParticleSystem particleInstance = Instantiate(particlePrefab, swpawnPoint.SpawnPoint);
             particleInstance.Stop();
             var shape = particleInstance.shape;
             shape.radius = swpawnPoint.Radius;
@@ -45,9 +45,9 @@ public class ElectricParticles : MonoBehaviour
         particleController.OnStartParticles -= PlayParticles;
     }
 
-    [Serializable] private class SwpanPoint
+    [Serializable] private class ParticleData
     {
-        [field: SerializeField] public Transform Point { get; private set; }
+        [field: SerializeField] public Transform SpawnPoint { get; private set; }
         [field: SerializeField] public float Radius { get; private set; }
     }
 }

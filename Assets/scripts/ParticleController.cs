@@ -8,7 +8,6 @@ public class ParticleController : MonoBehaviour
 
     public event Action<ParticleEffectType> OnStartParticles;
     
-
     public void Update()
     {
         if (toggle)

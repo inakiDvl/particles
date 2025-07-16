@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricParticles : MonoBehaviour
+public class FireParticles : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particlePrefab;
-    [SerializeField] private List<ElectricParticleConfig> particlesConfig = new();
+    [SerializeField] private List<FireParticleConfig> particlesConfig = new();
 
     private List<ParticleSystem> particleInstances = new();
     private ParticleController particleController;
 
     public void PlayParticles(ParticleEffectType type)
     {
-        if (type != ParticleEffectType.Electric)
+        if (type != ParticleEffectType.Fire)
             return;
 
         foreach (var particle in particleInstances)
@@ -31,12 +31,6 @@ public class ElectricParticles : MonoBehaviour
             particleInstance.Stop();
 
             var shape = particleInstance.shape;
-            /* var main = particleInstance.main;
-            var curve = main.startSize;
-            var particleSizeMin = curve.constantMin;
-            var particleSizeMax = curve.constantMax; */
-
-            Vector3 boundSize = Vector3.one;
 
             if (particleData.Mesh != null)
             {
@@ -65,7 +59,7 @@ public class ElectricParticles : MonoBehaviour
     }
 
     [Serializable]
-    private class ElectricParticleConfig
+    private class FireParticleConfig
     {
         [field: SerializeField] public Transform Parent { get; private set; }
         [field: SerializeField] public MeshRenderer Mesh { get; private set; }
